@@ -1,4 +1,4 @@
-## Introduction
+# RuuviTags data collection on Raspberry PI
 
 These tools provide means to collect measurement data from RuuviTags, store it in
 InfluxDB and display the data through Grafana.
@@ -28,11 +28,11 @@ This section describes how they are linked together.
 ## Initial setup
 
 1. Install InfluxDB
-  - See `influxdb/README.md` for instructions
+  - See [influxdb/README.md](influxdb/README.md) for instructions
 2. Install RuuviCollector
-  - See `ruuvi-collector/README.md` for instructions
+  - See [ruuvi-collector/README.md](ruuvi-collector/README.md) for instructions
 3. Install Grafana
-  - See grafana/README.md for instructions
+  - See [grafana/README.md](grafana/README.md) for instructions
 
 
 ## Updates
