@@ -12,25 +12,25 @@ from RuuviTags and storing them in InfluxDB.
 1. Clone git repository to repo directory:
   `git clone https://github.com/nikobockerman/RuuviCollector.git repo`
 2. Checkout repo to a desired version:
-  - See ## Select ruuvi-collector version
+  - See [Select ruuvi-collector version](#select-ruuvi-collector-version)
 3. Build docker image: `./create-image.sh`
 4. Create configuration:
   - Copy the example one: `cp repo/ruuvi-collector.properties.example ruuvi-collector.example`
   - Modify it according to desired setup
     - My modifications:
       - Influxdb related settings should match what was set when database was created:
-        - storage.method=influxdb
-        - influxUrl=http://127.0.0.1:8086
-        - influxDatabase=ruuvi
-        - influxMeasurement=ruuvi_measurements
-        - influxRetentionPolicy=ruuvi_collector_policy
+        - `storage.method=influxdb`
+        - `influxUrl=http://127.0.0.1:8086`
+        - `influxDatabase=ruuvi`
+        - `influxMeasurement=ruuvi_measurements`
+        - `influxRetentionPolicy=ruuvi_collector_policy`
       - Set desired interval for writing data to Influxdb (one entry per minute):
-        - measurementUpdateLimit=59900
+        - `measurementUpdateLimit=59900`
       - Only use ruuvi tags that are listed in ruuvi-names.properties
-        - filter.mode=named
+        - `filter.mode=named`
       - Blacklist information that I don't use in Grafana:
-        - storage.values=blacklist
-        - storage.values.list=accelerationX,accelerationY,accelerationZ,accelerationTotal,accelerationAngleFromX,accelerationAngleFromY,accelerationAngleFromZ,movementCounter
+        - `storage.values=blacklist`
+        - `storage.values.list=accelerationX,accelerationY,accelerationZ,accelerationTotal,accelerationAngleFromX,accelerationAngleFromY,accelerationAngleFromZ,movementCounter`
 
 5. Create friendly names for tags that will be seen in Grafana:
   - Copy the example file: `cp repo/ruuvi-names.properties.example ruuvi-names.example`
