@@ -1,4 +1,4 @@
-## Description
+# Grafana
 
 These scripts can be used to automate grafana docker container installation and upgrade.
 These scripts setup grafana so that grafana is listening on port `3000` on all host
@@ -13,20 +13,20 @@ through Grafana web interface.
 2. Follow steps 1-4 from Updating grafana container to get grafana installed and running.
 3. Perform initial setup with web browser by connecting to raspberry pi port 3000
   - Port number is specified in `start-grafana.sh`
-  - TODO: What steps are important in initial setup?
-    - Creating admin user account for mofifying settings and views
-    - Setup organization name to `Koti`
+  - Perform initial setup
+    - Create admin user account for modifying settings and views
+    - Set organization name to `Koti`
       - Default organization can be renamed under `Server Admin`/`Orgs`
     - Configure InfluxDb as data source
       - In `Configuration`/`Data Sources` add new data source (unless done through initial wizard)
       - My InfluxDb data source configuration (differences to defaults)
-        - Name: Ruuvi
-	- HTTP / Url: http://172.17.0.2:8086
-	  - Grafana and InfluxDb are under same bridge network by docker. Ip of influxdb can be
-	    checked with `sudo docker container inspect influxdb | grep IPAddress`
-	- Auth / Skip TLS Verify: Checked
-	- InfluxDB Details / Database: ruuvi
-	  - This should match the database name that has been created to InfluxDB
+        - `Name`: `Ruuvi`
+        - `HTTP` / `Url`: `http://172.17.0.2:8086`
+	        - Grafana and InfluxDb are under same bridge network by docker. Ip of influxdb can be
+	          checked with `sudo docker container inspect influxdb | grep IPAddress`
+        - `Auth` / `Skip TLS Verify`: `Checked`
+	      - `InfluxDB Details` / `Database`: `ruuvi`
+	        - This should match the database name that has been created to InfluxDB
 4. Create dashboards to your liking!
 
 ## Updating grafana container
