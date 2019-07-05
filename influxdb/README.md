@@ -1,3 +1,9 @@
+# InfluxDB
+
+These instructions are for running InfluxDB docker container as database for
+RuuviTags measurement data together with RuuviCollector and Grafana.
+
+
 ## Initial creation
 
 1. Create storage: `./create-storage.sh`
@@ -6,11 +12,11 @@
    `mv influxdb.conf{.default,}`
 4. Modify generated configuration file `influxdb.conf`
   - My changes to the defaults:
-    [data]/cache-max-memory-size = "512m"
+    - [data]/cache-max-memory-size = "512m"
       - Limits the amount of memory influxdb will allocate to itself
-    [data]/max-concurrent-compactions = 2
+    - [data]/max-concurrent-compactions = 2
       - Use max two cores to perform compactions
-    [monitor]/store-enabled = false
+    - [monitor]/store-enabled = false
       - Disable internal monitoring. This causes a lot of performance issues on
         Raspberry when enabled:
         https://github.com/influxdata/influxdb/issues/9475
@@ -20,6 +26,7 @@
     `sudo docker run --rm --link=influxdb -it influxdb:1.7 influx -host influxdb`
   2. Execute the following command to create the needed ruuvi database with one year retention policy:
     `CREATE DATABASE "ruuvi" WITH DURATION 52w NAME "ruuvi_collector_policy"`
+
 
 ## Update influxdb container
 
