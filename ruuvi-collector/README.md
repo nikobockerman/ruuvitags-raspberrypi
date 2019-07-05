@@ -1,3 +1,12 @@
+# RuuviCollector
+
+These instructions are for running RuuviCollector inside docker container to collect measurements
+from RuuviTags and storing them in InfluxDB.
+
+- RuuviCollector software: https://github.com/Scrin/RuuviCollector
+- RuuviCollector fork used in these instructions: https://github.com/nikobockerman/RuuviCollector
+
+
 ## Initial creation
 
 1. Clone git repository to repo directory:
@@ -10,29 +19,30 @@
   - Modify it according to desired setup
     - My modifications:
       - Influxdb related settings should match what was set when database was created:
-        storage.method=influxdb
-        influxUrl=http://127.0.0.1:8086
-        influxDatabase=ruuvi
-        influxMeasurement=ruuvi_measurements
-        influxRetentionPolicy=ruuvi_collector_policy
+        - storage.method=influxdb
+        - influxUrl=http://127.0.0.1:8086
+        - influxDatabase=ruuvi
+        - influxMeasurement=ruuvi_measurements
+        - influxRetentionPolicy=ruuvi_collector_policy
       - Set desired interval for writing data to Influxdb (one entry per minute):
-        measurementUpdateLimit=59900
+        - measurementUpdateLimit=59900
       - Only use ruuvi tags that are listed in ruuvi-names.properties
-        filter.mode=named
+        - filter.mode=named
       - Blacklist information that I don't use in Grafana:
-        storage.values=blacklist
-        storage.values.list=accelerationX,accelerationY,accelerationZ,accelerationTotal,accelerationAngleFromX,accelerationAngleFromY,accelerationAngleFromZ,movementCounter
+        - storage.values=blacklist
+        - storage.values.list=accelerationX,accelerationY,accelerationZ,accelerationTotal,accelerationAngleFromX,accelerationAngleFromY,accelerationAngleFromZ,movementCounter
 
 5. Create friendly names for tags that will be seen in Grafana:
   - Copy the example file: `cp repo/ruuvi-names.properties.example ruuvi-names.example`
   - List ruuvi tags MAC addresses and give them desired names
 6. Start ruuvi-collector: `./start-collector.sh`
 
+
 ## Update ruuvi-collector container
 
 1. Pull new base image: `./update-base-image.sh`
 2. Update git repo to version you want to use
-  - See ## Select ruuvi-collector version
+  - See [Select ruuvi-collector version](#select-ruuvi-collector-version)
 3. Build new docker image: `./create-image.sh`
 4. Stop old container `sudo docker container stop ruuvi-collector`
 5. Rename old container for backup: `sudo docker container rename ruuvi-collector{,-old}`
@@ -70,4 +80,3 @@ To take modified configuration files into use, ruuvi-collector docker image need
   - Remove unnecessary commits from the previous version branch
 2. Update dependency versions in pom.xml
 3. Push new branch / new commits to origin
-
