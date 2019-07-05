@@ -27,11 +27,14 @@ This section describes how they are linked together.
 
 ## Initial setup
 
-1. Install InfluxDB
+1. Install needed packages to host raspberry
+  - `docker-ce`: https://docs.docker.com/install/linux/docker-ce/debian/#install-using-the-convenience-script
+  
+2. Install InfluxDB
   - See [influxdb/README.md](influxdb/README.md) for instructions
-2. Install RuuviCollector
+3. Install RuuviCollector
   - See [ruuvi-collector/README.md](ruuvi-collector/README.md) for instructions
-3. Install Grafana
+4. Install Grafana
   - See [grafana/README.md](grafana/README.md) for instructions
 
 
