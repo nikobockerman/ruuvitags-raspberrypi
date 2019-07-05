@@ -1,4 +1,4 @@
-/influx/influxdb.conf
+/influxdb/influxdb.conf
 /ruuvi-collector/repo/
 /ruuvi-collector/ruuvi-collector.properties
 /ruuvi-collector/ruuvi-names.properties
