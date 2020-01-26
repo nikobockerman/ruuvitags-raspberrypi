@@ -5,35 +5,68 @@ in InfluxDB and display the data through Grafana.
 
 ## Network structure between created docker containers
 
-These network configurations are configured in the start scripts for each
-component. This section describes how they are linked together.
+This section describes the network confiration used for communication between
+the different docker containers. Helper scripts in this directory and start
+scripts for each component are configured to setup and use this network
+configuration.
 
-- RuuviCollector is using network of host directly. This is required as it needs
-  to be able to access Bluetooth LE devices for listening RuuviTags.
+The network configuration is designed to allow only the minimum that is required
+for each component.
 
-- InfluxDB is configured to provide one port for writing data from host machine.
-  This port can only be accessed from within host machine, not from the network
-  where host machine is. This is needed so that RuuviCollector can write data to
-  InfluxDB from as it is using host network directly and is not inside the
-  separate network created by docker. The same data port is also accessible from
-  other docker containers running in the same LAN created by docker.
+### RuuviCollector
 
-- Grafana has access to InfluxDB through the same LAN created by docker where
-  they are running. Grafana opens one port on the host machine to be available
-  for connections on any network interface on the host machine. This allows web
-  browsers to access Grafana Web UI.
+RuuviCollector requires access to host network in order to be able to access
+Bluetooth LE devices so that it's able to listen messages from RuuviTags.
+
+Additionally RuuviCollector requires access to InfluxDb container in order to
+write recorded data from RuuviTags to the database.
+
+When a docker container is connected to host network, it can't be connected to
+any other docker bridge network at the same time. Therefore, access
+RuuviCollector needs access to InfluxDb from host network.
+
+For these reasons, RuuviCollector has these connections:
+
+- Connected to host network in order to access Bluetooth LE devices
+- Writes to InfluxDb through 127.0.0.1:8086 published from InfluxDb Container
+
+### InfluxDb
+
+InfluxDb needs to be listening for write requests from RuuviCollector and read
+requests from Grafana.
+
+For those reasons, InfluxDb has these connections:
+
+- `grafana-influxbd` docker bridge network to provide data for Grafana
+- Binds port 8086 to 127.0.0.1:8086 on host machine allowing RuuviCollector to
+  write data through that port. Technically this allows anyone from within the
+  same machine to make requests to InfluxDb, but only RuuviCollector is
+  configured to use that port.
+
+### Grafana
+
+Grafana needs to be able to read data from InfluxDb and it needs to be listening
+on port 3000 of host machine in order for clients to access the Grafana Web UI.
+
+For those reasons, Grafana has these connections:
+
+- `grafana-influxdb` docker bridge network to read data from InfluxDb
+- Binds port 3000 to *:3000 on host machine allowing anyone with access to host
+  machine in the network to access Grafana Web UI.
 
 ## Initial setup
 
 1. Install needed packages to host raspberry
     - `docker-ce`:
       <https://docs.docker.com/install/linux/docker-ce/debian/#install-using-the-convenience-script>
-2. Install InfluxDB
+2. Create docker networks
+    - Run `./docker-network-setup.sh` script to create networks
+3. Install InfluxDB
     - See [influxdb/README.md](influxdb/README.md) for instructions
-3. Install RuuviCollector
+4. Install RuuviCollector
     - See [ruuvi-collector/README.md](ruuvi-collector/README.md) for
       instructions
-4. Install Grafana
+5. Install Grafana
     - See [grafana/README.md](grafana/README.md) for instructions
 
 ## Updates

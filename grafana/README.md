@@ -11,8 +11,8 @@ configuration setup through Grafana web interface.
 ## Initial installation
 
 1. Create storage for grafana by running: `./create-storage.sh`
-2. Follow steps 1-4 from Updating grafana container to get grafana installed and
-   running.
+2. Perform steps 1 and 4 from Updating grafana container to get grafana
+   installed and running.
 3. Perform initial setup with web browser by connecting to raspberry pi port
    3000
     - Port number is specified in `start-grafana.sh`
@@ -25,10 +25,10 @@ configuration setup through Grafana web interface.
               through initial wizard)
             - My InfluxDb data source configuration (differences to defaults)
                 - `Name`: `Ruuvi`
-                - `HTTP` / `Url`: `http://172.17.0.2:8086`
-                    - Grafana and InfluxDb are under same bridge network by
-                      docker. Ip of influxdb can be checked with
-                      `sudo docker container inspect influxdb | grep IPAddress`
+                - `HTTP` / `Url`: `http://influxdb:8086`
+                    - Grafana and InfluxDb are under same `grafana-influxdb`
+                      docker bridge network. InfluxDb container can be accessed
+                      with the container name as host address.
                 - `Auth` / `Skip TLS Verify`: `Checked`
                 - `InfluxDB Details` / `Database`: `ruuvi`
                     - This should match the database name that has been created
