@@ -5,11 +5,10 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
 
 ## Initial creation
 
-1. Create storage: `./create-storage.sh`
-2. Generate configuration: `./generate-config.sh`
-3. Rename generated configuration file to `influxdb.conf`:
+1. Generate configuration: `./generate-config.sh`
+2. Rename generated configuration file to `influxdb.conf`:
    `mv influxdb.conf{.default,}`
-4. Modify generated configuration file `influxdb.conf`
+3. Modify generated configuration file `influxdb.conf`
     - My changes to the defaults:
         - `[data]` / `cache-max-memory-size` = `"512m"`
             - Limits the amount of memory influxdb will allocate to itself
@@ -19,6 +18,7 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
             - Disable internal monitoring. This causes a lot of performance
               issues on Raspberry when enabled:
               <https://github.com/influxdata/influxdb/issues/9475>
+4. Create directory for backup: `mkdir backup`
 5. Start container: `./start-influxdb.sh`
 6. Create database for ruuvi-collector
     1. Connect to influxdb with influx client:
@@ -29,14 +29,19 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
 
 ## Update influxdb container
 
-1. Pull new version `./update-image.sh`
+1. Backup database: `./backup.sh`
+    - Deletes previous old backup from `./backup/old` if exists
+    - Moves existing latest backup from `./backup/latest` to `./backup/old`
+    - Creates new backup to `./backup/latest`
 2. Stop old container `sudo docker container stop influxdb`
-3. Rename old container for backup:
-   `sudo docker container rename influxdb{,-old}`
-4. Start new version: `./start-influxdb.sh`
+3. Pull new version `./update-image.sh`
+4. Rename old container for backup: `sudo docker container rename influxdb{,-old}`
+5. Start new version: `./start-influxdb.sh`
+6. Restore database: `./restore-from-backup.sh`
 
-5. Verify new version works by checking that grafana gets new data from ruuvi
-   tags
+7. Verify that restored data is visible in Grafana
+8. Verify RuuviCollector is able to store new data
 
-6. Remove old container: `sudo docker container rm influxdb-old`
-7. Remove unused images: `sudo docker image prune`
+9. Remove old container: `sudo docker container rm influxdb-old`
+10. Remove unused images: `sudo docker image prune`
+11. Optionally remove older backup to save disk space `rm -rf ./backup/old`
