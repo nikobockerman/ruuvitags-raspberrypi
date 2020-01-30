@@ -9,5 +9,5 @@ if [ -d "$cur_dir"/backup/latest ]; then
   mv "$cur_dir"/backup/{latest,old}
 fi
 
-sudo docker exec -it influxdb influxd backup -portable /backup/latest
+sudo docker exec influxdb influxd backup -portable /backup/latest
 sudo chown $(whoami) -R "$cur_dir"/backup/latest
