@@ -29,12 +29,12 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
 
 ## Update influxdb container
 
-1. Backup database: `./backup.sh`
+1. Pull new version `./update-image.sh`
+2. Backup database: `./backup.sh`
     - Deletes previous old backup from `./backup/old` if exists
     - Moves existing latest backup from `./backup/latest` to `./backup/old`
     - Creates new backup to `./backup/latest`
-2. Stop old container `sudo docker container stop influxdb`
-3. Pull new version `./update-image.sh`
+3. Stop old container `sudo docker container stop influxdb`
 4. Rename old container for backup: `sudo docker container rename influxdb{,-old}`
 5. Start new version: `./start-influxdb.sh`
 6. Restore database: `./restore-from-backup.sh`
