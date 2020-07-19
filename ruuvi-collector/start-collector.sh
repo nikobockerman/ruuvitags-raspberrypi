@@ -15,6 +15,6 @@ sudo docker run \
     --restart unless-stopped \
     --privileged \
     --net=host \
-    -v "$cur_dir"/ruuvi-collector.properties:/app/target/ruuvi-collector.properties:ro \
-    -v "$cur_dir"/ruuvi-names.properties:/app/target/ruuvi-names.properties:ro \
+    -v "$cur_dir"/ruuvi-collector.properties:/app/ruuvi-collector.properties:ro \
+    -v "$cur_dir"/ruuvi-names.properties:/app/ruuvi-names.properties:ro \
     ruuvi-collector:"$docker_image_tag"
