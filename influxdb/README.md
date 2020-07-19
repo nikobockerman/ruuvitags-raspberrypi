@@ -5,10 +5,11 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
 
 ## Initial creation
 
-1. Generate configuration: `./generate-config.sh`
-2. Rename generated configuration file to `influxdb.conf`:
+1. Download container: `./update-image.sh`
+2. Generate configuration: `./generate-config.sh`
+3. Rename generated configuration file to `influxdb.conf`:
    `mv influxdb.conf{.default,}`
-3. Modify generated configuration file `influxdb.conf`
+4. Modify generated configuration file `influxdb.conf`
     - My changes to the defaults:
         - `[data]` / `cache-max-memory-size` = `"512m"`
             - Limits the amount of memory influxdb will allocate to itself
@@ -18,14 +19,14 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
             - Disable internal monitoring. This causes a lot of performance
               issues on Raspberry when enabled:
               <https://github.com/influxdata/influxdb/issues/9475>
-4. Create directory for backup: `mkdir backup`
-5. Start container: `./start-influxdb.sh`
-6. Create database for ruuvi-collector
+5. Create directory for backup: `mkdir backup`
+6. Start container: `./start-influxdb.sh`
+7. Create database for ruuvi-collector
     1. Connect to influxdb with influx client:
-       `sudo docker run --rm --link=influxdb -it influxdb:1.7 influx -host influxdb`
+       `./connect-to-influxdb.sh`
     2. Execute the following command to create the needed ruuvi database with
-       one year retention policy:
-       `CREATE DATABASE "ruuvi" WITH DURATION 52w NAME "ruuvi_collector_policy"`
+       eight year retention policy:
+       `CREATE DATABASE "ruuvi" WITH DURATION 416w NAME "ruuvi_collector_policy"`
 
 ## Update influxdb container
 

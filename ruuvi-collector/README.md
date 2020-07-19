@@ -13,8 +13,9 @@ collect measurements from RuuviTags and storing them in InfluxDB.
    `git clone https://github.com/nikobockerman/RuuviCollector.git repo`
 2. Checkout repo to a desired version:
     - See [Select ruuvi-collector version](#select-ruuvi-collector-version)
-3. Build docker image: `./create-image.sh`
-4. Create configuration:
+3. Download base image: `./update-base-image.sh`
+4. Build docker image: `./create-image.sh`
+5. Create configuration:
     - Copy the example one:
       `cp repo/ruuvi-collector.properties.example ruuvi-collector.example`
     - Modify it according to desired setup
@@ -36,11 +37,11 @@ collect measurements from RuuviTags and storing them in InfluxDB.
                 -
                   `storage.values.list=accelerationX,accelerationY,accelerationZ,accelerationTotal,accelerationAngleFromX,accelerationAngleFromY,accelerationAngleFromZ,movementCounter`
 
-5. Create friendly names for tags that will be seen in Grafana:
+6. Create friendly names for tags that will be seen in Grafana:
     - Copy the example file:
       `cp repo/ruuvi-names.properties.example ruuvi-names.example`
     - List ruuvi tags MAC addresses and give them desired names
-6. Start ruuvi-collector: `./start-collector.sh`
+7. Start ruuvi-collector: `./start-collector.sh`
 
 ## Update ruuvi-collector container
 
