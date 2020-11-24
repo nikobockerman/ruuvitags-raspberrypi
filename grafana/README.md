@@ -38,9 +38,9 @@ configuration setup through Grafana web interface.
 ## Updating grafana container
 
 1. Pull new version `./update-image.sh`
-2. Stop old container `sudo docker container stop grafana`
-3. Rename old container for backup:
+2. Rename old container for backup:
    `sudo docker container rename grafana{,-old}`
+3. Stop old container `sudo docker container stop grafana-old`
 4. Start new version: `./start-grafana.sh`
 
 5. Verify new version works with browser

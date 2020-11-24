@@ -35,8 +35,8 @@ RuuviTags measurement data together with RuuviCollector and Grafana.
     - Deletes previous old backup from `./backup/old` if exists
     - Moves existing latest backup from `./backup/latest` to `./backup/old`
     - Creates new backup to `./backup/latest`
-3. Stop old container `sudo docker container stop influxdb`
-4. Rename old container for backup: `sudo docker container rename influxdb{,-old}`
+3. Rename old container for backup: `sudo docker container rename influxdb{,-old}`
+4. Stop old container `sudo docker container stop influxdb-old`
 5. Start new version: `./start-influxdb.sh`
 6. Restore database: `./restore-from-backup.sh`
 

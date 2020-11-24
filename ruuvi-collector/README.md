@@ -49,9 +49,9 @@ collect measurements from RuuviTags and storing them in InfluxDB.
 2. Update git repo to version you want to use
     - See [Select ruuvi-collector version](#select-ruuvi-collector-version)
 3. Build new docker image: `./create-image.sh`
-4. Stop old container `sudo docker container stop ruuvi-collector`
-5. Rename old container for backup:
+4. Rename old container for backup:
    `sudo docker container rename ruuvi-collector{,-old}`
+5. Stop old container `sudo docker container stop ruuvi-collector-old`
 6. Start new version: `./start-collector.sh`
 
 7. Verify new version works by checking that grafana gets new data from ruuvi
