@@ -13,7 +13,7 @@ collect measurements from RuuviTags and storing them in InfluxDB.
    `git clone https://github.com/nikobockerman/RuuviCollector.git repo`
 2. Checkout repo to a desired version:
     - See [Select ruuvi-collector version](#select-ruuvi-collector-version)
-3. Download base image: `./update-base-image.sh`
+3. Download base images: `./update-base-images.sh`
 4. Build docker image: `./create-image.sh`
 5. Create configuration:
     - Copy the example one:
@@ -45,7 +45,7 @@ collect measurements from RuuviTags and storing them in InfluxDB.
 
 ## Update ruuvi-collector container
 
-1. Pull new base image: `./update-base-image.sh`
+1. Pull new base images: `./update-base-images.sh`
 2. Update git repo to version you want to use
     - See [Select ruuvi-collector version](#select-ruuvi-collector-version)
 3. Build new docker image: `./create-image.sh`
